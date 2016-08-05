@@ -1,5 +1,6 @@
 package velosearch;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 /**
  * Created by demo on 05/08/16.
@@ -18,9 +20,12 @@ import java.net.URL;
 public class AvitoParserMain {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+//        simpleSearch();
 //        simpleSearch2();
-        simpleSearch3();
+//        simpleSearch3();
+
+        simpleSearch4();
 
 
 
@@ -110,19 +115,41 @@ public class AvitoParserMain {
         }
     }
 
+
+    public static void simpleSearch4() throws IOException {
+        InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("avito_page_search_example_orig.html");
+        parsePage(IOUtils.toString(resourceAsStream, "utf-8"));
+
+    }
+
     private static void parsePage(String page) {
 
         Document doc = Jsoup.parse(page);
 //        Elements links = doc.select("a[href]");
 //        Elements media = doc.select("[src]");
 //        Elements imports = doc.select("link[href]");
-        Elements imports = doc.select("div[class=data]");
 
+        System.out.println("start parsePage!!!");
+        Elements imports = doc.select("img");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<html>");
         for (Element import_ : imports) {
-            System.out.println("======");
-            System.out.println(import_);
-            System.out.println("======");
+
+            //System.out.println(import_);
+            String newImport = import_.toString().replaceAll("src=\"//", "src=\"https://");
+            newImport = newImport.replaceAll("data-srcpath=\"//", "data-srcpath=\"");
+            stringBuilder.append(newImport);
+            stringBuilder.append("\n");
+
+
+
         }
+
+        stringBuilder.append("</html>");
+
+
+        System.out.println(stringBuilder);
 
 
 
