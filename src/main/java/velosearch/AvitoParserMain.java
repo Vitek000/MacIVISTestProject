@@ -142,18 +142,45 @@ public class AvitoParserMain {
             stringBuilder.append(newImport);
             stringBuilder.append("\n");
 
+        }
 
+        stringBuilder.append("</html>");
+
+        System.out.println(stringBuilder);
+
+    }
+
+
+    private static void parsePage2(String page) {
+
+        Document doc = Jsoup.parse(page);
+//        Elements links = doc.select("a[href]");
+//        Elements media = doc.select("[src]");
+//        Elements imports = doc.select("link[href]");
+
+        System.out.println("start parsePage!!!");
+        Elements imports = doc.select("img");
+
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("<html>");
+        for (Element import_ : imports) {
+
+            //System.out.println(import_);
+            String newImport = import_.toString().replaceAll("src=\"//", "src=\"https://");
+            newImport = newImport.replaceAll("data-srcpath=\"//", "data-srcpath=\"");
+            stringBuilder.append(newImport);
+            stringBuilder.append("\n");
 
         }
 
         stringBuilder.append("</html>");
 
-
         System.out.println(stringBuilder);
 
-
-
-
     }
+
+
+
+
 
 }
