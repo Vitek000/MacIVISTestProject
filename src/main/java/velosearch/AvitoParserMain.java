@@ -1,6 +1,5 @@
 package velosearch;
 
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
@@ -13,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -31,7 +29,8 @@ public class AvitoParserMain {
 //        simpleSearch3();
 
 //        simpleSearch4();
-        simpleSearch5();
+//        simpleSearchWithTestFile1();
+        simpleSearchFromAvitoSite1();
 
 
     }
@@ -128,9 +127,39 @@ public class AvitoParserMain {
     }
 
 
-    public static void simpleSearch5() throws IOException {
+    public static void simpleSearchWithTestFile1() throws IOException {
         InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("avito_page_search_example_orig.html");
         parsePage3(IOUtils.toString(resourceAsStream, "utf-8"));
+
+    }
+    public static void simpleSearchFromAvitoSite1() throws IOException {
+        //InputStream resourceAsStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("avito_page_search_example_orig.html");
+
+        URL url;
+        InputStream is = null;
+
+        try {
+            String searchWord = "Велосипед";
+            url = new URL("https://www.avito.ru/moskva?q=" + searchWord);
+            is = url.openStream();  // throws an IOException
+            //String page = IOUtils.toString(is, "utf-8");
+
+            //log(page);
+
+            parsePage3(IOUtils.toString(is, "utf-8"));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (is != null) is.close();
+            } catch (IOException ioe) {
+                // nothing to see here
+            }
+        }
+
+
 
     }
 
