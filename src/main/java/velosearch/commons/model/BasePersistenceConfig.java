@@ -1,19 +1,5 @@
-package velosearch.model;
+package velosearch.commons.model;
 
-import org.springframework.context.annotation.AdviceMode;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-
-/**
- * Created by Viktor Aleksandrov on 19/08/16.
- */
-/**
- * Copyright 2016 "East View Information Services, Inc"
- */
-package com.eastview.model;
-
-import com.eastview.commons.model.logic.impl.BaseManagerFactoryImpl;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.AdviceMode;
@@ -22,14 +8,19 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import velosearch.commons.model.logic.impl.BaseManagerFactoryImpl;
 
 import javax.annotation.Resource;
 import java.util.Properties;
 
+/**
+ * Created by Viktor Aleksandrov on 19/08/16.
+ */
+
 
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true, mode = AdviceMode.PROXY)
-@PropertySource("classpath:udb-jdbc.properties")
+@PropertySource("classpath:avitodb-jdbc.properties")
 public class BasePersistenceConfig {
     private static Logger logger = Logger.getLogger(BasePersistenceConfig.class);
     @Resource public Environment environment;
@@ -76,7 +67,8 @@ public class BasePersistenceConfig {
 
     protected static Properties getHibernateProperties(Environment environment) {
         Properties properties = new Properties();
-        properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+//        properties.put("hibernate.dialect", "org.hibernate.dialect.Oracle10gDialect");
+        properties.put("hibernate.dialect", "com.enigmabridge.hibernate.dialect.SQLiteDialect");
         properties.put("hibernate.max_fetch_depth", 4);
         properties.put("hibernate.jdbc.batch_size", 30);
         properties.put("hibernate.bytecode.use_reflection_optimizer", true);

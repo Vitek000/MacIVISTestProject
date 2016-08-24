@@ -16,12 +16,8 @@ public class AvitoMessageEntity {
     @Column(name = "ID")
     private long id;
 
-    @Column(name = "TYPE_NAME")
+    @Column(name = "TITLE")
     private String title;
-
-
-
-
 
 
     public long getId() {

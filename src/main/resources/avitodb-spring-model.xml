@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+
+    <!-- Manager template  -->
+    <bean id="txProxyTemplate" abstract="true" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+        <property name="transactionManager" ref="avitodb_TransactionManager"/>
+        <property name="transactionAttributes">
+            <props>
+                <prop key="find*">PROPAGATION_SUPPORTS,readOnly</prop>      <!-- no new transaction for find* methods like findById(), but we allow it to execute in existing transaction -->
+                <prop key="get*">PROPAGATION_SUPPORTS,readOnly</prop>       <!-- no new transaction for get* methods like getSomething(), but we allow it to execute in existing transaction -->
+                <prop key="is*">PROPAGATION_SUPPORTS,readOnly</prop>        <!-- no new transaction for is* methods like isSomething(), but we allow it to execute in existing transaction -->
+                <prop key="save*">PROPAGATION_REQUIRED</prop>               <!-- transaction required for all method which actually changes DB -->
+                <prop key="delete*">PROPAGATION_REQUIRED</prop>
+                <prop key="*">PROPAGATION_REQUIRED</prop>                   <!-- for all other methods. Just to ensure -->
+            </props>
+        </property>
+    </bean>
+
+
+    <!-- Managers -->
+    <bean id="productManager" parent="txProxyTemplate">
+        <property name="target" ref="productManagerTarget"/>
+    </bean>
+
+
+    <bean id="avitodbManagerTarget" class="velosearch.model.domain.logic.impl.AvitoMessageManagerImpl" autowire="byName"/>
+
+
+    <bean id="productDAO" class="velosearch.model.persistence.hibernate.AvitoMessageDAOHibernate">
+        <property name="sessionFactory">
+            <ref bean="avitodb_SessionFactory"/>
+        </property>
+    </bean>
+
+</beans>

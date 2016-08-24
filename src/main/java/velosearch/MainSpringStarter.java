@@ -9,7 +9,7 @@ public class MainSpringStarter {
 
     public static void main(String[] args) {
 
-        ApplicationContext
+
 
     }
 }
