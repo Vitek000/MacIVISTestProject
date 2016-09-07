@@ -1,3 +1,5 @@
+package fignya;
+
 /**
  * Created by demo on 18/05/16.
  */
