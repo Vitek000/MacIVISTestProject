@@ -58,18 +58,21 @@ public class TabShower {
         StringBuilder stringBuilder = new StringBuilder();
 
         int MAX_COLS = 3;
-        stringBuilder.append("<table border=\"1\">");
+
+        stringBuilder.append(" <style type=\"text/css\">\n" +
+                "  body {\n" +
+                "    color: purple;\n" +
+                "    background-color: #d8da3d }\n" +
+                "    td { border: solid thin }\n" +
+                "  </style>");
+        stringBuilder.append("<table>");
 
         int ind = 0;
 
         boolean newRow = true;
-        boolean endRow = false;
         boolean firstRow = true;
         for (Integer integer : tab) {
 
-//            if(ind++ > MAX_COLS) {
-//
-//            }
             if(newRow) {
                 stringBuilder.append("\n");
                 if(!firstRow) {
@@ -85,14 +88,9 @@ public class TabShower {
 
             stringBuilder.append("</td>");
 
-//            if(endRow) {
-//                stringBuilder.append("</tr>");
-//            }
-
             ind++;
 
             newRow = ind % MAX_COLS == 0;
-            endRow = ind % (MAX_COLS) == 0;
 
 
         }
