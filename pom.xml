@@ -24,7 +24,7 @@
     <properties>
         <spring.security.version>4.0.3.RELEASE</spring.security.version>
         <spring.version>4.2.3.RELEASE</spring.version>
-        <hibernate.version>4.2.21.Final
+        <hibernate.version>4.3.20.RELEASE
         </hibernate.version>   <!-- 4.3 requires JPA 2.1 which may have some issues with Resin 4.x -->
         <hibernate.validator.version>4.3.2.Final</hibernate.validator.version>
     </properties>
